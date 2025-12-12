@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<HBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="client.controller.RegisterController"
+      stylesheets="@../css/login.css" prefWidth="850" prefHeight="550">
+
+    <VBox styleClass="left-pane" alignment="CENTER" prefWidth="350" HBox.hgrow="NEVER" spacing="10">
+        <Label text="TH Mail" style="-fx-text-fill: white; -fx-font-size: 36px; -fx-font-weight: bold;"/>
+        <Label text="Join us today!" style="-fx-text-fill: #bdc3c7; -fx-font-size: 16px;"/>
+        <Label text="Bảo mật - Tốc độ - Thông minh" style="-fx-text-fill: #bdc3c7; -fx-font-size: 12px; -fx-font-style: italic;"/>
+    </VBox>
+
+    <VBox styleClass="right-pane" alignment="CENTER" spacing="15" HBox.hgrow="ALWAYS">
+        <padding><Insets top="40" right="60" bottom="40" left="60"/></padding>
+
+        <Label text="Tạo tài khoản mới" styleClass="title-label"/>
+        <Label text="Điền thông tin bên dưới để bắt đầu." style="-fx-text-fill: gray;"/>
+
+        <Separator/>
+
+        <VBox spacing="5">
+            <Label text="Họ và Tên" style="-fx-font-weight: bold;"/>
+            <TextField fx:id="txtName" promptText="Ví dụ: Nguyễn Văn A" styleClass="input-field" prefHeight="40"/>
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="Tên đăng nhập (Username)" style="-fx-font-weight: bold;"/>
+            <TextField fx:id="txtUser" promptText="user123" styleClass="input-field" prefHeight="40"/>
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="Mật khẩu" style="-fx-font-weight: bold;"/>
+            <PasswordField fx:id="txtPass" promptText="Tối thiểu 6 ký tự" styleClass="input-field" prefHeight="40"/>
+        </VBox>
+
+        <VBox spacing="5">
+            <Label text="Nhập lại Mật khẩu" style="-fx-font-weight: bold;"/>
+            <PasswordField fx:id="txtConfirmPass" promptText="Nhập y hệt bên trên" styleClass="input-field" prefHeight="40"/>
+        </VBox>
+
+        <Region prefHeight="10"/>
+
+        <Button text="ĐĂNG KÝ NGAY" onAction="#handleRegister" maxWidth="Infinity" prefHeight="45" styleClass="btn-login" style="-fx-background-color: #27ae60;"/>
+
+        <HBox alignment="CENTER" spacing="5">
+            <Label text="Đã có tài khoản?"/>
+            <Button text="Đăng nhập tại đây" onAction="#handleBackToLogin" styleClass="link-btn"/>
+        </HBox>
+    </VBox>
+</HBox>

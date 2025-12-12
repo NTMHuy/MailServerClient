@@ -1,0 +1,140 @@
+/* style.css - TH Mail Theme */
+.root {
+    -fx-font-family: "Segoe UI", "Helvetica", sans-serif;
+    -fx-background-color: #f4f6f8; /* Nền xám xanh nhạt dịu mắt */
+}
+
+/* --- SIDEBAR (THANH BÊN TRÁI) --- */
+.sidebar {
+    -fx-background-color: linear-gradient(to bottom, #2c3e50, #34495e); /* Gradient Xanh đen */
+}
+
+.app-logo {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-padding: 20;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 1);
+}
+
+.sidebar-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ecf0f1; /* Màu trắng xám */
+    -fx-font-size: 14px;
+    -fx-alignment: BASELINE_LEFT;
+    -fx-padding: 12 25;
+    -fx-cursor: hand;
+    -fx-border-width: 0 0 0 4; /* Viền trái ẩn */
+    -fx-border-color: transparent;
+}
+
+.sidebar-btn:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: white;
+}
+
+/* Nút đang được chọn (Active) */
+.sidebar-btn:focused, .sidebar-btn-active {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-text-fill: white;
+    -fx-border-color: #e67e22; /* Viền cam bên trái */
+}
+
+/* --- NÚT SOẠN THƯ (NỔI BẬT) --- */
+.btn-compose {
+    -fx-background-color: #e67e22; /* Màu Cam San Hô */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 15px;
+    -fx-background-radius: 30; /* Bo tròn hoàn toàn */
+    -fx-padding: 12 30;
+    -fx-effect: dropshadow(three-pass-box, rgba(230, 126, 34, 0.4), 8, 0, 0, 4);
+    -fx-cursor: hand;
+    -fx-alignment: CENTER;
+}
+.btn-compose:hover {
+    -fx-background-color: #d35400;
+    -fx-translate-y: -1; /* Hiệu ứng nhấc nhẹ lên */
+}
+
+/* --- BẢNG DANH SÁCH THƯ --- */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-base: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-table-cell-border-color: transparent;
+    -fx-padding: 10;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #bdc3c7;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #7f8c8d;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-text-transform: uppercase;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-background-insets: 2 0; /* Tạo khe hở giữa các dòng */
+    -fx-background-radius: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 3, 0, 0, 1);
+    -fx-cell-size: 50px; /* Dòng cao hơn */
+    -fx-border-width: 0;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #fdfefe;
+    -fx-translate-x: 2; /* Hiệu ứng trượt nhẹ */
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #e8f6f3; /* Xanh ngọc rất nhạt */
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-row-cell:selected .text {
+    -fx-fill: #16a085; /* Chữ chuyển màu xanh ngọc đậm */
+    -fx-font-weight: bold;
+}
+
+/* --- CHI TIẾT THƯ & BOX AI --- */
+.detail-card {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    -fx-padding: 30;
+}
+
+.ai-box {
+    -fx-background-color: linear-gradient(to right, #e0c3fc, #8ec5fc); /* Gradient tím xanh */
+    -fx-background-radius: 10;
+    -fx-padding: 15;
+}
+
+.btn-action {
+    -fx-background-color: white;
+    -fx-text-fill: #555;
+    -fx-border-color: #ddd;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-cursor: hand;
+}
+.btn-action:hover { -fx-background-color: #f9f9f9; }
+
+/* TextField đẹp */
+.text-field, .text-area {
+    -fx-background-color: white;
+    -fx-border-color: #bdc3c7;
+    -fx-border-radius: 4;
+    -fx-padding: 8;
+}
+.text-field:focused, .text-area:focused {
+    -fx-border-color: #3498db;
+    -fx-effect: dropshadow(three-pass-box, rgba(52, 152, 219, 0.2), 5, 0, 0, 0);
+}

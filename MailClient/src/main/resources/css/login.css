@@ -1,0 +1,45 @@
+.root { -fx-font-family: "Segoe UI", sans-serif; }
+
+.right-pane { -fx-background-color: white; }
+
+/* Nền trái Gradient đẹp */
+.left-pane {
+    -fx-background-color: linear-gradient(to bottom right, #0b57d0, #5c97f7);
+}
+
+.title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #202124;
+}
+
+.input-field {
+    -fx-background-color: #f1f3f4;
+    -fx-background-radius: 4;
+    -fx-border-color: transparent;
+    -fx-padding: 10;
+    -fx-font-size: 14px;
+}
+.input-field:focused {
+    -fx-background-color: white;
+    -fx-border-color: #0b57d0;
+    -fx-border-width: 2px;
+}
+
+.btn-login {
+    -fx-background-color: #0b57d0;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 20; /* Bo tròn nút */
+    -fx-cursor: hand;
+}
+.btn-login:hover { -fx-background-color: #0842a0; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 5, 0, 0, 1);}
+
+.link-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #0b57d0;
+    -fx-cursor: hand;
+    -fx-font-weight: bold;
+}
+.link-btn:hover { -fx-underline: true; }

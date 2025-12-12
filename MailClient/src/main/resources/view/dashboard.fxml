@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="client.controller.DashboardController" stylesheets="@../css/style.css">
+
+    <left>
+        <VBox styleClass="sidebar" prefWidth="240" spacing="10">
+            <padding><Insets top="0" right="0" bottom="20" left="0"/></padding>
+
+            <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 25;">
+                <Label text="TH Mail" styleClass="app-logo"/>
+            </HBox>
+
+            <VBox alignment="CENTER" style="-fx-padding: 0 20 20 20;">
+                <Button text="+ Soạn thư mới" styleClass="btn-compose" onAction="#handleCompose" maxWidth="Infinity"/>
+            </VBox>
+
+            <Label text="MENU CHÍNH" style="-fx-text-fill: #95a5a6; -fx-font-size: 11px; -fx-padding: 10 25; -fx-font-weight: bold;"/>
+
+            <Button text="📥  Hộp thư đến" onAction="#loadInbox" maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="🚀  Thư đã gửi" onAction="#loadSent"  maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="⚠️  Thư rác (Spam)" onAction="#loadSpam" maxWidth="Infinity" styleClass="sidebar-btn"/>
+            <Button text="🗑️  Thùng rác" maxWidth="Infinity" styleClass="sidebar-btn"/>
+
+            <Region VBox.vgrow="ALWAYS"/>
+
+            <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 15 20; -fx-background-color: rgba(0,0,0,0.2);">
+                <Circle radius="18" fill="WHITE" stroke="TRANSPARENT"/> <VBox>
+                <Label fx:id="lblUser" text="Username" style="-fx-text-fill: white; -fx-font-weight: bold;"/>
+                <Button text="Đăng xuất" onAction="#handleLogout" style="-fx-text-fill: #e74c3c; -fx-background-color: transparent; -fx-padding: 0; -fx-font-size: 11px; -fx-cursor: hand;"/>
+            </VBox>
+            </HBox>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="15" style="-fx-padding: 20 30;">
+            <HBox alignment="CENTER_LEFT" spacing="15">
+                <Label fx:id="lblFolderTitle" text="Hộp thư đến" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <TextField promptText="🔍 Tìm kiếm trong thư..." prefWidth="250" style="-fx-background-radius: 20;"/>
+            </HBox>
+
+            <TableView fx:id="tableEmail" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colId" text="#" prefWidth="50" style="-fx-alignment: CENTER; -fx-text-fill: #95a5a6;"/>
+                    <TableColumn fx:id="colSender" text="Người gửi" prefWidth="200"/>
+                    <TableColumn fx:id="colSubject" text="Chủ đề" prefWidth="450"/>
+                    <TableColumn fx:id="colTime" text="Thời gian" prefWidth="150" style="-fx-alignment: CENTER_RIGHT;"/>
+                </columns>
+                <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
+                <placeholder><Label text="Hộp thư trống" style="-fx-text-fill: #95a5a6;"/></placeholder>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

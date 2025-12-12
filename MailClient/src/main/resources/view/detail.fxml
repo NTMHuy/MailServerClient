@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Circle?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="client.controller.DetailController" stylesheets="@../css/style.css"
+      prefWidth="750" prefHeight="650" style="-fx-padding: 20;">
+
+    <VBox spacing="20" styleClass="detail-card" VBox.vgrow="ALWAYS">
+
+        <HBox alignment="TOP_LEFT">
+            <Label fx:id="lblSubject" text="Tiêu đề thư" wrapText="true"
+                   style="-fx-font-size: 26px; -fx-font-family: 'Segoe UI'; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+        </HBox>
+
+        <HBox spacing="15" alignment="CENTER_LEFT">
+            <Circle radius="22" fill="#3498db"/>
+            <VBox spacing="2">
+                <Label fx:id="lblSender" text="Người gửi" style="-fx-font-weight: bold; -fx-font-size: 15px;"/>
+                <Label fx:id="lblTime" text="Time" style="-fx-text-fill: #7f8c8d; -fx-font-size: 12px;"/>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <HBox fx:id="boxSpamActions" spacing="10" visible="false" alignment="CENTER_RIGHT">
+                <Button fx:id="btnRestore" text="♻️ Khôi phục" onAction="#handleRestore"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;" visible="false"/>
+
+                <Button fx:id="btnActionMain" text="🗑️ Xóa" onAction="#handleDelete"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
+            </HBox>
+        </HBox>
+
+        <Separator/>
+
+        <TextArea fx:id="txtContent" VBox.vgrow="ALWAYS" wrapText="true" editable="false"
+                  style="-fx-background-color: transparent; -fx-font-size: 15px; -fx-font-family: 'Segoe UI'; -fx-border-width: 0;"/>
+
+        <VBox styleClass="ai-box" spacing="10">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="✨ AI Assistant" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                <Button text="Tóm tắt nội dung" onAction="#handleSummarize" style="-fx-background-color: rgba(255,255,255,0.5); -fx-text-fill: #333; -fx-font-size: 11px; -fx-cursor: hand;"/>
+                <Label fx:id="lblAiStatus" text="" style="-fx-font-style: italic;"/>
+            </HBox>
+            <TextArea fx:id="txtSummary" prefHeight="70" wrapText="true" editable="false"
+                      promptText="Bấm nút để AI phân tích..."
+                      style="-fx-background-color: rgba(255,255,255,0.3); -fx-border-width: 0;"/>
+        </VBox>
+
+        <HBox spacing="10" alignment="CENTER_RIGHT" style="-fx-padding: 10 0 0 0;">
+            <Button text="↩ Trả lời" onAction="#handleReply" styleClass="btn-action"/>
+            <Button text="➡ Chuyển tiếp" onAction="#handleForward" styleClass="btn-action"/>
+        </HBox>
+
+    </VBox>
+</VBox>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="client.controller.ComposeController" stylesheets="@../css/style.css" prefWidth="600" prefHeight="500">
+    <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+
+    <Label text="Thư mới" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: #404040; -fx-text-fill: white; -fx-padding: 10; -fx-background-radius: 5 5 0 0;"/>
+
+    <TextField fx:id="txtTo" promptText="Người nhận"/>
+    <TextField fx:id="txtSubject" promptText="Tiêu đề"/>
+
+    <TextArea fx:id="txtBody" VBox.vgrow="ALWAYS" wrapText="true" promptText="Nội dung thư..."/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button text="Gửi" onAction="#handleSend" styleClass="btn-primary" prefWidth="80" prefHeight="35"/>
+        <Button fx:id="btnVoice" text="🎤" onAction="#handleVoice" style="-fx-font-size: 16px; -fx-text-fill: #d93025;"/>
+        <Label fx:id="lblStatus" text="" style="-fx-text-fill: #188038;"/>
+    </HBox>
+</VBox>

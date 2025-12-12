@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox prefHeight="500" prefWidth="800" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controller.LoginController">
+
+    <VBox alignment="CENTER" prefWidth="350" styleClass="left-pane" HBox.hgrow="NEVER">
+        <Label style="-fx-text-fill: white; -fx-font-size: 32px; -fx-font-weight: bold;" text="THMail" />
+        <Label style="-fx-text-fill: #e8f0fe; -fx-font-size: 14px;" text="Kết nối mọi lúc, bảo mật tối đa" />
+    </VBox>
+
+    <VBox alignment="CENTER" spacing="20" styleClass="right-pane" HBox.hgrow="ALWAYS">
+        <padding><Insets bottom="40" left="60" right="60" top="40" /></padding>
+
+        <VBox spacing="5">
+            <Label styleClass="title-label" text="Xin chào," />
+            <Label style="-fx-text-fill: gray;" text="Đăng nhập để vào hộp thư của bạn." />
+        </VBox>
+
+        <VBox spacing="15">
+            <VBox spacing="5">
+                <Label style="-fx-font-weight: bold;" text="Tên đăng nhập" />
+                <TextField fx:id="txtUser" prefHeight="40" promptText="username" styleClass="input-field" />
+            </VBox>
+
+            <VBox spacing="5">
+                <Label style="-fx-font-weight: bold;" text="Mật khẩu" />
+                <PasswordField fx:id="txtPass" prefHeight="40" promptText="••••••••" styleClass="input-field" />
+            </VBox>
+        </VBox>
+
+        <Button maxWidth="Infinity" onAction="#handleLogin" prefHeight="45" styleClass="btn-login" text="ĐĂNG NHẬP" />
+
+        <HBox alignment="CENTER">
+            <Label text="Chưa có tài khoản?" />
+            <Button onAction="#handleRegister" styleClass="link-btn" text="Đăng ký ngay" />
+        </HBox>
+    </VBox>
+
+</HBox>
