@@ -1,5 +1,6 @@
 package client.controller;
 
+import client.RMIClient;
 import client.SocketClient;
 import client.ai.SummarizerClient;
 import common.Email;
@@ -29,11 +30,15 @@ public class DetailController {
     private User currentUser; // User hiện tại (Cần để biết ai đang Reply)
     private SocketClient client = new SocketClient();
 
+    private RMIClient rmiClient;
+
     // --- HÀM SETUP (CẬP NHẬT: NHẬN 3 THAM SỐ) ---
     public void setup(Email email, DashboardController dashboard, User user) {
         this.email = email;
         this.dashboardController = dashboard;
         this.currentUser = user;
+
+        this.rmiClient = new RMIClient();
 
         // 1. Hiển thị thông tin
         lblSubject.setText(email.getSubject());
@@ -110,21 +115,39 @@ public class DetailController {
     // --- 3. XỬ LÝ XÓA (DELETE) ---
     @FXML
     public void handleDelete() {
-        String currentFolder = email.getFolder();
+//        String currentFolder = email.getFolder();
+//
+//        // Nếu đang ở Thùng rác hoặc Thư đã gửi -> Xóa vĩnh viễn
+//        if ("TRASH".equals(currentFolder) || "SENT".equals(currentFolder)) {
+//            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Hành động này không thể hoàn tác. Bạn chắc chắn muốn xóa vĩnh viễn?", ButtonType.YES, ButtonType.NO);
+//            confirm.showAndWait();
+//
+//            if (confirm.getResult() == ButtonType.YES) {
+//                Response res = client.sendRequest(new Request("DELETE_MAIL", email.getId()));
+//                showAlertAndClose(res.message);
+//            }
+//        } else {
+//            // Nếu ở Inbox/Spam -> Chuyển vào thùng rác (Soft Delete)
+//            Response res = client.sendRequest(new Request("MOVE_TO_TRASH", email.getId()));
+//            showAlertAndClose(res.message);
+//        }
 
-        // Nếu đang ở Thùng rác hoặc Thư đã gửi -> Xóa vĩnh viễn
-        if ("TRASH".equals(currentFolder) || "SENT".equals(currentFolder)) {
-            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Hành động này không thể hoàn tác. Bạn chắc chắn muốn xóa vĩnh viễn?", ButtonType.YES, ButtonType.NO);
-            confirm.showAndWait();
+        Alert confirm = new Alert(
+                Alert.AlertType.CONFIRMATION,
+                "Bạn chắc chắn muốn xóa email này?",
+                ButtonType.YES,
+                ButtonType.NO
+        );
+        confirm.showAndWait();
 
-            if (confirm.getResult() == ButtonType.YES) {
-                Response res = client.sendRequest(new Request("DELETE_MAIL", email.getId()));
-                showAlertAndClose(res.message);
+        if (confirm.getResult() == ButtonType.YES) {
+            boolean ok = rmiClient.deleteEmail(email.getId());
+
+            if (ok) {
+                showAlertAndClose("Đã xóa email thành công");
+            } else {
+                showAlert("Xóa email thất bại");
             }
-        } else {
-            // Nếu ở Inbox/Spam -> Chuyển vào thùng rác (Soft Delete)
-            Response res = client.sendRequest(new Request("MOVE_TO_TRASH", email.getId()));
-            showAlertAndClose(res.message);
         }
     }
 
@@ -132,8 +155,16 @@ public class DetailController {
     @FXML
     public void handleRestore() {
         // Gọi lệnh UNSPAM (Bản chất là set folder = INBOX)
-        Response res = client.sendRequest(new Request("UNSPAM", email.getId()));
-        showAlertAndClose("Đã khôi phục thư về Inbox!");
+//        Response res = client.sendRequest(new Request("UNSPAM", email.getId()));
+//        showAlertAndClose("Đã khôi phục thư về Inbox!");
+
+        boolean ok = rmiClient.markNotSpam(email.getId());
+
+        if (ok) {
+            showAlertAndClose("Đã khôi phục thư về Inbox");
+        } else {
+            showAlert("Khôi phục thất bại");
+        }
     }
 
     @FXML

@@ -1,0 +1,6 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Vosk model (AI model - very large file)
+MailClient/src/main/resources/models/vosk-model-vn-0.4/

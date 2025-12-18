@@ -1,5 +1,6 @@
 package client.controller;
 
+import client.RMIClient;
 import client.SocketClient;
 import common.Request;
 import common.Response;
@@ -19,6 +20,7 @@ public class LoginController {
     // Kết nối Socket
     private SocketClient client = new SocketClient();
 
+    private RMIClient rmiClient = new RMIClient();
     @FXML
     public void handleLogin() {
         String user = txtUser.getText().trim();
@@ -39,21 +41,40 @@ public class LoginController {
         }
 
         try {
-            Response res = client.sendRequest(new Request("LOGIN", new User(user, encryptedPass, null)));
+//            Response res = client.sendRequest(new Request("LOGIN", new User(user, encryptedPass, null)));
+//
+//            if (res.success) {
+//                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
+//                Parent root = loader.load();
+//
+//                DashboardController ctrl = loader.getController();
+//                ctrl.initData((User) res.data); // Truyền thông tin user sang Dashboard
+//
+//                Stage stage = (Stage) txtUser.getScene().getWindow();
+//                stage.setScene(new Scene(root));
+//                stage.setTitle("TH Mail - Hộp thư đến");
+//                stage.centerOnScreen();
+//            } else {
+//                showAlert("Đăng nhập thất bại", res.message, Alert.AlertType.ERROR);
+//            }
 
-            if (res.success) {
+            // 3. GỌI RMI LOGIN
+            User loggedUser = rmiClient.login(user, encryptedPass);
+
+            if (loggedUser != null) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
                 Parent root = loader.load();
 
                 DashboardController ctrl = loader.getController();
-                ctrl.initData((User) res.data); // Truyền thông tin user sang Dashboard
+                ctrl.initData(loggedUser); // TRUYỀN USER NHƯ CŨ
 
                 Stage stage = (Stage) txtUser.getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.setTitle("TH Mail - Hộp thư đến");
                 stage.centerOnScreen();
+
             } else {
-                showAlert("Đăng nhập thất bại", res.message, Alert.AlertType.ERROR);
+                showAlert("Đăng nhập thất bại", "Sai tên đăng nhập hoặc mật khẩu!", Alert.AlertType.ERROR);
             }
         } catch (Exception e) {
             e.printStackTrace();

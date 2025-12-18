@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
@@ -16,18 +18,60 @@
 
     <dependencies>
 
-        <!-- PostgreSQL JDBC Driver -->
+        <!-- ================= JAVAFX ================= -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>23</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>23</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>23</version>
+            <classifier>win</classifier>
+        </dependency>
+
+        <!-- ================= DATABASE ================= -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.7.3</version>
         </dependency>
 
+        <!-- ================= JSON ================= -->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20231013</version>
         </dependency>
 
+        <!-- ================= RMI (JAVA BUILT-IN) ================= -->
+        <!-- Không cần dependency cho RMI -->
+
     </dependencies>
+
+    <build>
+        <plugins>
+
+            <!-- Plugin chạy JavaFX -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <!-- MAIN CLASS CỦA SERVER GUI -->
+                    <mainClass>server.rmi.RMIServerMain</mainClass>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
 </project>

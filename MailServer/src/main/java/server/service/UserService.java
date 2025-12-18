@@ -78,4 +78,17 @@ public class UserService {
 
         return null; // Đăng nhập thất bại
     }
+
+    // UserService.java
+    public boolean logout(String username) {
+        if (username == null || username.isEmpty()) {
+            return false;
+        }
+
+        // Hiện tại không có session DB
+        // Logout chỉ mang ý nghĩa logic server
+        return true;
+    }
+
+
 }

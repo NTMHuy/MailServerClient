@@ -1,5 +1,6 @@
 package client.controller;
 
+import client.RMIClient;
 import client.SocketClient;
 import client.voice.AudioCapture;
 import common.Email;
@@ -21,6 +22,7 @@ public class ComposeController {
 
     private User currentUser;
     private SocketClient client = new SocketClient();
+    private RMIClient rmiClient;
 
     private boolean micOn = false;
     private AudioCapture capture;
@@ -30,6 +32,9 @@ public class ComposeController {
     public void setup(User user) {
 
         this.currentUser = user;
+
+        //ket noi RMI
+        this.rmiClient = new RMIClient();
 
         vosk = new VoskService(new VoiceInputListener() {
 
@@ -162,14 +167,35 @@ public class ComposeController {
                 txtBody.getText()
         );
 
-        Response res = client.sendRequest(new Request("SEND", email));
+//        Response res = client.sendRequest(new Request("SEND", email));
+//
+//        showAlert("Thông báo", res.message);
+        // ===== GỌI RMI =====
+        String result = rmiClient.sendEmail(email);
 
-        showAlert("Thông báo", res.message);
+        switch (result) {
+            case "OK":
+                showAlert("Thành công", "📨 Email đã được gửi!");
+                ((Stage) txtTo.getScene().getWindow()).close();
+                break;
 
-        if (res.success) {
-            // Đóng cửa sổ soạn thảo
-            ((Stage) txtTo.getScene().getWindow()).close();
+            case "SPAM_DETECTED":
+                showAlert("Cảnh báo", "⚠ Email bị đánh dấu SPAM!");
+                ((Stage) txtTo.getScene().getWindow()).close();
+                break;
+
+            case "USER_NOT_FOUND":
+                showAlert("Lỗi", "❌ Người nhận không tồn tại!");
+                break;
+
+            default:
+                showAlert("Lỗi", "❌ Gửi mail thất bại!");
         }
+
+//        if (res.success) {
+//            // Đóng cửa sổ soạn thảo
+//            ((Stage) txtTo.getScene().getWindow()).close();
+//        }
     }
 
     private void showAlert(String title, String content) {

@@ -1,5 +1,6 @@
 package client.controller;
 
+import client.RMIClient;
 import client.SocketClient;
 import common.Email;
 import common.Request;
@@ -27,6 +28,8 @@ public class DashboardController {
     private User currentUser;
     private SocketClient client = new SocketClient();
 
+    private RMIClient rmiClient;
+
     // --- BIẾN ĐỂ TỰ ĐỘNG LÀM MỚI ---
     private Timeline autoRefreshTimer;
     private String currentFolder = "INBOX"; // Lưu trạng thái đang xem folder nào
@@ -38,6 +41,10 @@ public class DashboardController {
     public void initData(User user) {
         this.currentUser = user;
         lblUser.setText(user.getFullName());
+
+        //ket noi rmi
+        this.rmiClient = new RMIClient();
+
         loadInbox(); // Mặc định vào là load Inbox ngay
 
         // BẮT ĐẦU CHẠY ĐỒNG HỒ TỰ ĐỘNG CẬP NHẬT
@@ -125,21 +132,34 @@ public class DashboardController {
 
     // Hàm load chính thức (Có hiển thị loading nếu cần)
     private void loadEmails(String folder) {
-        Response res = client.sendRequest(new Request("GET_EMAILS", new String[]{currentUser.getUsername(), folder}));
-        if (res.success) {
-            updateTableData((List<Email>) res.data);
+//        Response res = client.sendRequest(new Request("GET_EMAILS", new String[]{currentUser.getUsername(), folder}));
+//        if (res.success) {
+//            updateTableData((List<Email>) res.data);
+//        }
+        List<Email> emails =
+                rmiClient.getEmails(currentUser.getUsername(), folder);
+
+        if (emails != null) {
+            updateTableData(emails);
         }
     }
 
     // Hàm load ngầm (Chạy bởi Timer)
     private void refreshTableSilent() {
         // Gửi request lấy dữ liệu mới nhất của folder đang xem
-        Response res = client.sendRequest(new Request("GET_EMAILS", new String[]{currentUser.getUsername(), currentFolder}));
-        if (res.success) {
-            List<Email> newData = (List<Email>) res.data;
-            // So sánh kích thước hoặc ID mới nhất để xem có tin mới không, nếu thích
-            // Ở đây ta cứ cập nhật lại bảng luôn
-            updateTableData(newData);
+//        Response res = client.sendRequest(new Request("GET_EMAILS", new String[]{currentUser.getUsername(), currentFolder}));
+//        if (res.success) {
+//            List<Email> newData = (List<Email>) res.data;
+//            // So sánh kích thước hoặc ID mới nhất để xem có tin mới không, nếu thích
+//            // Ở đây ta cứ cập nhật lại bảng luôn
+//            updateTableData(newData);
+//        }
+
+        List<Email> emails =
+                rmiClient.getEmails(currentUser.getUsername(), currentFolder);
+
+        if (emails != null) {
+            updateTableData(emails);
         }
     }
 
@@ -197,13 +217,41 @@ public class DashboardController {
         refreshTableSilent();
     }
 
+  //  @FXML
+//    public void handleLogout() {
+//        stopAutoRefresh(); // Dừng đồng hồ khi thoát
+//        try {
+//            Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+//            Stage stage = (Stage) lblUser.getScene().getWindow();
+//            stage.setScene(new Scene(root));
+//        } catch (Exception e) { e.printStackTrace(); }
+//    }
+
     @FXML
     public void handleLogout() {
-        stopAutoRefresh(); // Dừng đồng hồ khi thoát
+        // 1. Dừng auto refresh trước
+        stopAutoRefresh();
+
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+            // 2. Gọi logout lên server (nếu đã kết nối RMI)
+            if (rmiClient != null && currentUser != null) {
+                rmiClient.logout(currentUser.getUsername());
+            }
+
+            // 3. Quay về màn hình login
+            Parent root = FXMLLoader.load(
+                    getClass().getResource("/view/login.fxml")
+            );
             Stage stage = (Stage) lblUser.getScene().getWindow();
             stage.setScene(new Scene(root));
-        } catch (Exception e) { e.printStackTrace(); }
+            stage.centerOnScreen();
+
+            // 4. Reset state phía client
+            currentUser = null;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 }

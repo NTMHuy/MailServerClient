@@ -1,5 +1,6 @@
 package client.controller;
 
+import client.RMIClient;
 import client.SocketClient;
 import common.Request;
 import common.Response;
@@ -17,6 +18,7 @@ public class RegisterController {
     @FXML private PasswordField txtPass, txtConfirmPass;
 
     private SocketClient client = new SocketClient();
+    private RMIClient rmiClient = new RMIClient();
 
     @FXML
     public void handleRegister() {
@@ -48,13 +50,29 @@ public class RegisterController {
         }
 
         User newUser = new User(user, encryptedPass, name);
-        Response res = client.sendRequest(new Request("REGISTER", newUser));
+//        Response res = client.sendRequest(new Request("REGISTER", newUser));
+//
+//        if (res.success) {
+//            showAlert("Thành công", "Tạo tài khoản thành công! Vui lòng đăng nhập.");
+//            handleBackToLogin(); // Chuyển về màn hình đăng nhập
+//        } else {
+//            showAlert("Thất bại", res.message); // Ví dụ: Username đã tồn tại
+//        }
 
-        if (res.success) {
-            showAlert("Thành công", "Tạo tài khoản thành công! Vui lòng đăng nhập.");
-            handleBackToLogin(); // Chuyển về màn hình đăng nhập
-        } else {
-            showAlert("Thất bại", res.message); // Ví dụ: Username đã tồn tại
+        //rmi register
+        try {
+            boolean success = rmiClient.register(newUser);
+
+            if (success) {
+                showAlert("Thành công", "Tạo tài khoản thành công! Vui lòng đăng nhập.");
+                handleBackToLogin();
+            } else {
+                showAlert("Thất bại", "Tên đăng nhập đã tồn tại!");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Lỗi mạng", "Không kết nối được đến RMI Server.");
         }
     }
 
